@@ -1,22 +1,19 @@
 from flask import Flask, request, Request, render_template
 from flask_restful import Api, Resource, fields, marshal_with
+import requests
+import simplejson
 
 app = Flask(__name__)
 api = Api(app)
-
-output_fields = {"field1": fields.Integer,
-                "field2": fields.Float,
-                "field3": fields.Float}
 
 
 class Item_api(Resource):
     """
     class for API
     """
-    @marshal_with(output_fields)
-    def get(self):
+    def get(self, param):
         pass
-
+        
     def post(self):
         pass
 
@@ -26,7 +23,7 @@ class Item_api(Resource):
     def update(self):
         pass
 
-api.add_resource(Item_api, '/api/v1/item/')
+api.add_resource(Item_api, '/api/v1/item/<param>')
 
 if __name__ == "__main__":    
     app.run(port=5000, debug=True)
