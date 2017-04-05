@@ -1,7 +1,7 @@
 from flask import Flask, request, Request, render_template
 from flask_restful import Api, Resource, fields, marshal_with
 import requests
-import simplejson
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -14,7 +14,8 @@ output_fields = {"id": fields.Integer,
                 "seller_longitude": fields.Float,
                 "seller_name": fields.String,
                 "status": fields.String,
-                "title": fields.String}
+                "title": fields.String,
+                "gm_url": fields.String}
 
 
 class Item_api(Resource):
@@ -24,9 +25,11 @@ class Item_api(Resource):
     @marshal_with(output_fields)
     def get(self, param):
         if param == "all":
-            output = requests.get("https://item-api.herokuapp.com/api/v1/items").text
-            output = simplejson.load(ouptut)
-            return output, 200
+            output1 = requests.get("https://item-api.herokuapp.com/api/v1/items").text
+            output2 = json.loads(output1)
+            for o in output2:
+                o["gm_url"] = "https://www.google.ca/maps/place/{0} {1}".format(str(o["seller_latitude"]), str(o["seller_longitude"]))
+            return output2, 200
 
     def post(self):
         pass
