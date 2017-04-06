@@ -1,7 +1,7 @@
 from flask import Flask, request, Request, render_template
 from flask_restful import Api, Resource, fields, marshal_with
 import requests
-import simplejson
+import json
 
 app = Flask(__name__)
 api = Api(app)
