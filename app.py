@@ -1,20 +1,16 @@
+import db_layer as db
 from flask import Flask, request, Request, render_template
 from flask_restful import Api, Resource, fields, marshal_with
 import requests
-import simplejson
+import json
+
 
 app = Flask(__name__)
 api = Api(app)
 
 output_fields = {"id": fields.Integer,
-                "description": fields.String,
-                "price": fields.Float,
-                "published_date": fields.String,
-                "seller_latitude": fields.Float,
-                "seller_longitude": fields.Float,
-                "seller_name": fields.String,
-                "status": fields.String,
-                "title": fields.String}
+                "title": fields.String,
+                "description": fields.String}
 
 
 class Item_api(Resource):
@@ -23,21 +19,32 @@ class Item_api(Resource):
     """
     @marshal_with(output_fields)
     def get(self, param):
-        if param == "all":
-            output = requests.get("https://item-api.herokuapp.com/api/v1/items").text
-            output = simplejson.load(ouptut)
-            return output, 200
+        if param=="all":
+            return db.get_all(), 200
+        elif param=="title":
+            title=request.args.get('title')
+            print title
+            return db.get_by_title(title)
+        else:
+            return ""
 
     def post(self):
-        pass
+        return db.insert_new(title=request.form.get('title'),
+                             description=request.form.get('description')), 201
 
     def delete(self):
-        pass
+        delete_entry(id=request.form.get('id'))
+        return '', 204
 
     def update(self):
-        pass
+        update_entry(id=request.form.get('id'),
+                     title=request.form.get('title'),
+                     description=request.form.get('description'))
+        return '', 201
 
 api.add_resource(Item_api, '/api/v1/item/<param>')
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
+    #db.create_tables()
+    #db.seed()
     app.run(port=5000, debug=True)
