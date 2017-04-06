@@ -34,9 +34,11 @@ class Item_api(Resource):
         else:
             return ""
 
-    def post(self):
-        return db.insert_new(title=request.form.get('title'),
-                             description=request.form.get('description')), 201
+    def post(self, param):
+        if param == 'new':
+            db.insert_new(title=request.form.get('title'),
+                          description=request.form.get('description'))
+            return '', 201
 
     def delete(self):
         delete_entry(id=request.form.get('id'))
