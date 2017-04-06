@@ -14,7 +14,7 @@ def create_tables():
     # table drop and creation
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    print "table created"
+    #print "table created"
 
 
 def get_all():
@@ -25,6 +25,10 @@ def get_by_title(title):
     # get all entries
     return s.query(Item).filter(Item.title.like('%'+str(title)+'%')).order_by(Item.title).all()
 
+def get_by_id(id):
+    # get the entry
+    return s.query(Item).filter(Item.id == id).first()
+
 def insert_new(title, description):    
     # instantiate a new object from mapped class
     item = Item(title=str(title), description=str(description))
@@ -32,7 +36,7 @@ def insert_new(title, description):
     try:
         s.add(item)
         s.commit()
-        print "ok"
+        #print "ok"
     except Exception as e:
         s.rollback()
 
@@ -49,4 +53,4 @@ def seed():
     elements = [{'title':"Title {0}".format(str(i)), 'description':"Description for Title {0}".format(str(i))} for i in range(5)]
     for el in elements:
         insert_new(el['title'], el['description'])
-    print "seeding done"
+    #print "seeding done"

@@ -22,9 +22,12 @@ class Item_api(Resource):
         if param=="all":
             return db.get_all(), 200
         elif param=="title":
-            title=request.args.get('title')
-            print title
+            title = request.args.get('title')            
             return db.get_by_title(title)
+        elif param.isdigit():
+            id = int(param)
+            print id
+            return db.get_by_id(id)
         else:
             return ""
 
@@ -45,6 +48,6 @@ class Item_api(Resource):
 api.add_resource(Item_api, '/api/v1/item/<param>')
 
 if __name__ == "__main__":
-    #db.create_tables()
-    #db.seed()
+    db.create_tables()
+    db.seed()
     app.run(port=5000, debug=True)
