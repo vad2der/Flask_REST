@@ -19,6 +19,7 @@ def create_tables():
 
 def get_all():
     # get all entries
+    print "requesting all entries"
     return s.query(Item).order_by(Item.title).all()
 
 def get_by_title(title):

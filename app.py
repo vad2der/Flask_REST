@@ -1,11 +1,13 @@
 import db_layer as db
 from flask import Flask, request, Request, render_template
 from flask_restful import Api, Resource, fields, marshal_with
+from flask_cache import Cache
 import requests
 import json
 
 
 app = Flask(__name__)
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 api = Api(app)
 
 output_fields = {"id": fields.Integer,
@@ -17,6 +19,8 @@ class Item_api(Resource):
     """
     class for API
     """
+    @cache.cached(timeout=30, key_prefix='items')
+    #@cache.memoize(timeout=30)
     @marshal_with(output_fields)
     def get(self, param):
         if param=="all":
@@ -25,8 +29,7 @@ class Item_api(Resource):
             title = request.args.get('title')            
             return db.get_by_title(title)
         elif param.isdigit():
-            id = int(param)
-            print id
+            id = int(param)            
             return db.get_by_id(id)
         else:
             return ""
