@@ -19,7 +19,7 @@ def create_tables():
 
 def get_all():
     # get all entries
-    print "requesting all entries"
+    #print "requesting all entries"
     return s.query(Item).order_by(Item.title).all()
 
 def get_by_title(title):
@@ -42,13 +42,14 @@ def insert_new(title, description):
         s.rollback()
 
 def delete_entry(id):
+    #print "ID to Delete is: {}".format(str(id))
     s.query(Item).filter(Item.id == id).delete()
 
 def update_entry(item):
     item = {'id': item['id'],
           'title': item['title'],
           'description': item['description']}
-    s.query(Item).filter(Item.id == id).update({item})
+    s.query(Item).filter(Item.id == item['id']).update(item)
 
 def seed():
     elements = [{'title':"Title {0}".format(str(i)), 'description':"Description for Title {0}".format(str(i))} for i in range(5)]
