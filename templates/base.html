@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item</title>
+    
+</head>
+
+<body class="body">
+<div class="container body-content">
+    <div class="row">
+
+        <div class="col-md-12">
+            {% block content %}
+            {% endblock content %}
+        </div>        
+
+    </div>
+    <footer class="navbar navbar-fixed-bottom footer">
+        <p>&copy; Vadim Deryabin</p>
+    </footer>
+</div>
+
+</body>
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css')}}"></link>
+
+<script src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='mustache.js') }}"></script>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</html>

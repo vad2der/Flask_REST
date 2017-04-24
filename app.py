@@ -68,6 +68,11 @@ class Item_api(Resource):
 
 api.add_resource(Item_api, '/api/v1/item/<param>')
 
+# start page
+@app.route('/items')
+def items():       
+    return render_template('item.html', some_value="qwerty")
+
 if __name__ == "__main__":
     db.create_tables()
     db.seed()

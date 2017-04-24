@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+  {% block content %}
+<h1>Items</h1>
+
+<div class="row">
+  <div class="col-md-1" ></div>
+
+  <div class="col-md-10">  
+    <div id=message>
+
+    </div>
+    <div>  
+      <table>
+        <tr>        
+          <td><textarea id="title" class="form-control"
+                         placeholder="Title"
+                         maxlength="30"></textarea>
+          </td>
+          <td><textarea id="description" class="form-control"
+                         placeholder="Description"
+                         maxlength="200"></textarea>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" id="add" onclick=fn.addItem();>Add</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <table class="table table-striped table-hover table-responsive" id="itemsTable">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Title</th>
+          <th>Delete</th>
+        </tr>      
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-1"></div>
+</div>
+{% endblock content %}
