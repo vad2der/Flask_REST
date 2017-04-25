@@ -31,16 +31,16 @@ class Item_api(Resource):
         else:
             return ""
 
-    def post(self):
+    def post(self, param):
         return db.insert_new(title=request.form.get('title'),
                              description=request.form.get('description')), 201
 
-    def delete(self):
-        delete_entry(id=request.form.get('id'))
+    def delete(self, param):
+        db.delete_entry(id=request.form.get('id'))
         return '', 204
 
-    def update(self):
-        update_entry(id=request.form.get('id'),
+    def update(self, param):
+        db.update_entry(id=request.form.get('id'),
                      title=request.form.get('title'),
                      description=request.form.get('description'))
         return '', 201
